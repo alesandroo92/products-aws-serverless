@@ -1,0 +1,70 @@
+service: productos-serverless
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: # aca ingresar la región
+  iamRoleStatements:
+    - Effect: Allow
+      Action: 
+        - dynamodb:*
+      Resource:
+        - # aca ingresar el Amazon Resource Name de la tabla
+
+functions:
+  hello:
+    handler: controllers/index.hello
+    events:
+      - httpApi:
+          path: /
+          method: get
+
+  createProduct:
+    handler: controllers/addProduct.addProduct
+    events:
+      - httpApi:
+          path: /product
+          method: post    
+
+  updateProduct:
+    handler: controllers/updateProduct.updateProduct
+    events:
+      - httpApi:
+          path: /product/{id}
+          method: put       
+
+  getProduct:
+    handler: controllers/getProduct.getProduct
+    events:
+      - httpApi:
+          path: /product/{id}
+          method: get 
+
+  getProducts:
+    handler: controllers/getProducts.getProducts
+    events:
+      - httpApi:
+          path: /products
+          method: get    
+
+  deleteProduct:
+    handler: controllers/deleteProduct.deleteProduct
+    events:
+      - httpApi:
+          path: /product/{id}
+          method: delete                                  
+
+resources:
+  Resources:
+    ProductsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ProductsTable
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH           

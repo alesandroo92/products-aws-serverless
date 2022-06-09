@@ -1,0 +1,15 @@
+{
+  "name": "productos-serverless",
+  "version": "1.0.0",
+  "description": "Agregación de productos en AWS utilizando serverless",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alesandro Accattoli Roman",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1150.0",
+    "uuid": "^8.3.2"
+  }
+}
